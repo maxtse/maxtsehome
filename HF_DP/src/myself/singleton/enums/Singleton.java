@@ -6,6 +6,7 @@ package myself.singleton.enums;
  * Date: 15-7-1
  * Time: 下午10:23
  * To change this template use File | Settings | File Templates.
+ * Note:枚举实现接口
  */
 public enum Singleton implements ActionService{
     INSTANCE{

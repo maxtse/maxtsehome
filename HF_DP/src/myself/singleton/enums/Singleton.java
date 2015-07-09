@@ -9,18 +9,19 @@ package myself.singleton.enums;
  * Note:枚举实现接口
  */
 public enum Singleton implements ActionService{
+
     INSTANCE{
         @Override
         public void process() {
             System.out.println("process:" + this.name());
         }
-
         @Override
         public void log() {
             System.out.println("log:" + this.name());
 
         }
     };
+    private static final String TEST = "TEST";
 
 
 

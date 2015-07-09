@@ -12,5 +12,6 @@ public class SingletonClient {
     public static void main(String[] args) {
         Singleton.INSTANCE.process();
         Singleton.INSTANCE.log();
+        Singleton.INSTANCE.log();
     }
 }

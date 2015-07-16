@@ -28,7 +28,7 @@ public class Singleton {
             lock.unlock();
         }
         return uniqueInstance;
-        /*if (uniqueInstance == null) {//第一次检查
+        /*if (uniqueInstance == null) {//第一次检查f
             synchronized (Singleton.class) {//同步
                 if (uniqueInstance == null) {//第二次检查
                     uniqueInstance = new Singleton();

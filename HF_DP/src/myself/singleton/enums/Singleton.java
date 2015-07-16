@@ -8,7 +8,7 @@ package myself.singleton.enums;
  * To change this template use File | Settings | File Templates.
  * Note:枚举实现接口
  */
-public enum Singleton implements ActionService{
+public enum Singleton{
 
     INSTANCE{
         @Override
@@ -22,6 +22,10 @@ public enum Singleton implements ActionService{
         }
     };
     private static final String TEST = "TEST";
+
+    abstract void process();
+
+    abstract void log();
 
 
 

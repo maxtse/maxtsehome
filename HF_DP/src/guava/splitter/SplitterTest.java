@@ -1,9 +1,10 @@
 package guava.splitter;
 
 import com.google.common.base.CharMatcher;
-import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
+import guava.utils.PrintResultUtil;
+
+import java.util.Iterator;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,35 +17,30 @@ import com.google.common.base.Strings;
 public class SplitterTest{
 
     /*Splitter.on(char separator)*/
-    public static void onCharTest() {
+    //弱：只可以使用单个字符进行拆分
+    public static void onChar() {
         Iterable<String> iterable = Splitter.on('s').split("apples,splitter");
-        printResult("onCharTest", iterable);
+        PrintResultUtil.printResult("onChar", iterable);
     }
 
     /* Splitter.on(final CharMatcher separatorMatcher) {*/
-    public static  void onCharMatcher() {
+    //在符合charMatcher的地方进行拆分 用途是对于一个字符串 有多个拆分规则
+    public static void onCharMatcher() {
         CharMatcher charMatcher = CharMatcher.DIGIT.or(CharMatcher.is('s'));//数字或者是s字符
-        printResult("onCharMatcher", Splitter.on(charMatcher).omitEmptyStrings().trimResults().splitToList("12as2sad"));
-
+        PrintResultUtil.printResult("onCharMatcher", Splitter.on(charMatcher).omitEmptyStrings().trimResults().splitToList("12as2sad"));
     }
 
-
-    private static void printResult(String methodName, Iterable<String> iterable) {
-        printResult(methodName, iterable, null);
-    }
-    private static void printResult(String methodName,Iterable<String> iterable, String iterableName) {
-        Preconditions.checkArgument(!Strings.isNullOrEmpty(methodName), "methodName must not be null or empty");
-        Preconditions.checkArgument(iterable != null, "iterable must not be null");
-
-        for (String print : iterable) {
-            System.out.println(new StringBuilder(methodName).append(" ").append(Strings.nullToEmpty(iterableName)).
-                    append(": [").append(print).append("]").toString());
-        }
+    /*Splitter.on(final String separator) {*/
+    //比on(char separator)强的是 我们可以多个字符了
+    public static void onString() {
+        Iterable<String> iterable = Splitter.on("ha").omitEmptyStrings().trimResults().split("what happened");
+        PrintResultUtil.printResult("onString", iterable);
     }
 
     public static void main(String[] args) {
         //add test method
-        onCharTest();
+        onChar();
         onCharMatcher();
+        onString();
     }
 }

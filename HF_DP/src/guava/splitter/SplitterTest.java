@@ -23,7 +23,8 @@ public class SplitterTest{
 
     /* Splitter.on(final CharMatcher separatorMatcher) {*/
     public static  void onCharMatcher() {
-        CharMatcher charMatcher = CharMatcher.DIGIT.and(CharMatcher.is('s'));//数字或者是s字符
+        CharMatcher charMatcher = CharMatcher.DIGIT.or(CharMatcher.is('s'));//数字或者是s字符
+        printResult("onCharMatcher", Splitter.on(charMatcher).omitEmptyStrings().trimResults().splitToList("12as2sad"));
 
     }
 
@@ -34,13 +35,16 @@ public class SplitterTest{
     private static void printResult(String methodName,Iterable<String> iterable, String iterableName) {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(methodName), "methodName must not be null or empty");
         Preconditions.checkArgument(iterable != null, "iterable must not be null");
+
         for (String print : iterable) {
-            System.out.println(methodName + " " + Strings.nullToEmpty(iterableName) + ": [" + print + "]");
+            System.out.println(new StringBuilder(methodName).append(" ").append(Strings.nullToEmpty(iterableName)).
+                    append(": [").append(print).append("]").toString());
         }
     }
 
     public static void main(String[] args) {
         //add test method
         onCharTest();
+        onCharMatcher();
     }
 }

@@ -22,7 +22,7 @@ target/
 
 # system ignore
 .DS_Store
-Thumbs.db
+Thumbs.com.max.tse.db
 
 # package ignore (optional)
 # *.jar

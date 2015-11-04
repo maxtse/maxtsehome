@@ -12,7 +12,7 @@
             "
        default-lazy-init="false">
 
-    <bean class="com.qunar.fuwu.orderlist.common.util.SpringWrapper"/>
+    <bean class="com.max.tse.common.utils.SpringWrapper"/>
 
 
 

@@ -3,7 +3,7 @@ package com.max.tse.reflect;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import com.max.tse.common.po.Student;
+import com.max.tse.po.Student;
 import org.apache.commons.lang.ClassUtils;
 
 import java.lang.reflect.Field;

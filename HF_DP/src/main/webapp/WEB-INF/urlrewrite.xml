@@ -87,11 +87,11 @@
 
     INSTALLATION
 
-        in your web.xml add...
+        in your com.max.tse.web.xml add...
 
         <filter>
             <filter-name>UrlRewriteFilter</filter-name>
-            <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+            <filter-class>org.tuckey.com.max.tse.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
             <init-param>
                 <param-name>logLevel</param-name>
                 <param-value>WARN</param-value>

@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 /**
  * User: yuebin.xie
  * 由于目前大部分的bean没有在spring中管理,导致无法注入，所以先使用一个wrapper适配一下
+ *
  */
 public class SpringWrapper implements ApplicationContextAware {
 

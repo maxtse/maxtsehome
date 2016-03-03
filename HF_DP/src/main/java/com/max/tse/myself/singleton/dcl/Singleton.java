@@ -1,5 +1,8 @@
 package com.max.tse.myself.singleton.dcl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -11,6 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * Note:this is com.max.tse.thread safe case double clock check
  */
 public class Singleton {
+    private static final Logger  logger = LoggerFactory.getLogger(Singleton.class);
     private static ReentrantLock lock = new ReentrantLock();
     private static volatile Singleton uniqueInstance;
 
@@ -18,12 +22,15 @@ public class Singleton {
 
     public static Singleton getInstance() {
         try {
-            lock.lock();
-            if (uniqueInstance == null) {
-                uniqueInstance = new Singleton();
+            if(uniqueInstance == null) {
+                lock.lock();
+                if (uniqueInstance == null) {
+                    uniqueInstance = new Singleton();
+                }
             }
+
         } catch (Exception e) {
-            System.out.println("lock error");
+            logger.error("lock error", e);
         } finally {//解锁
             lock.unlock();
         }
@@ -39,4 +46,15 @@ public class Singleton {
     }
     //为什么需要两次检查：假设A进入了同步模块 在创建实例且被B感知之前，B进入了第一次检查 这时候仍然检查通过 ，待A离开同步模块
     //B可以进入，然后创建实例，这时，会有A B各自创建的实例
+
+    public static Singleton getInstance1() {
+        if (uniqueInstance == null) {
+            synchronized (Singleton.class) {
+                if  (uniqueInstance == null) {
+                    uniqueInstance = new Singleton();
+                }
+            }
+        }
+        return uniqueInstance;
+    }
 }

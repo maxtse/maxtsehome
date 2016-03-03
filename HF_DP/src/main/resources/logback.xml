@@ -2,8 +2,9 @@
 <configuration debug="true" scan="true" scanPeriod="30 seconds">
     <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
     <property name="LOG_HOME" value="/home/xyb/q/work/logs" />
+    <property name="encoding" value="UTF-8"/>
     <property name="normal-pattern" value = "%d{yyyy-MM-dd.HH:mm:ss} %-5level [%thread] %logger{10}.%M:%L [%X{learnType}] %msg%n"/>
-    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+    <!--<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>
     </contextListener>
 
@@ -11,32 +12,29 @@
         <encoder>
             <pattern>${normal-pattern}</pattern>
         </encoder>
-    </appender>
-    <appender name="FILE"
+    </appender>-->
+    <appender name="fileDefault"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>${LOG_HOME}/maxtse.%d{yyyy-MM-dd}.log</FileNamePattern>
-            <!-- 日志30天有效-->
-            <MaxHistory>30</MaxHistory>
-        </rollingPolicy>
-        <!-- 输出格式-->
+        <file>${LOG_HOME}/maxtse.log</file>
+        <prudent>false</prudent>
+        <Append>true</Append>
         <encoder>
-            <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+            <pattern>${normal-pattern}</pattern>
+            <charset>${encoding}</charset>
         </encoder>
-        <!-- 文件最大大小-->
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>10MB</MaxFileSize>
-        </triggeringPolicy>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/maxtse.%d{yyyy-MM-dd-HH}.log</fileNamePattern>
+        </rollingPolicy>
     </appender>
 
-    <!--<logger name="qunar.tc.qmq" level="INFO" />-->
-    <logger  name="org.springframework.*" level="INFO" />
-
-    <!--<logger name="org.apache.zookeeper" level="INFO" />-->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${normal-pattern}</pattern>
+            <charset>${encoding}</charset>
+        </encoder>
+    </appender>
 
     <root level="INFO">
-        <!--<root level="DEBUG">-->
-        <appender-ref ref="console" />
-        <appender-ref ref="FILE"/>
+        <appender-ref ref="stdout"/>
     </root>
 </configuration>

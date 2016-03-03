@@ -1,15 +1,20 @@
 package com.max.tse.common.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.CharMatcher;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.SetUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -57,8 +62,92 @@ public class Test {
         String productType = StringUtils.trim(StringUtils.substringBefore(key, SPLITTER));
         System.out.println("action=" + action + "bizType=" + bizType + "productType=" + productType);
 
-        System.out.print("fsd" + Long.MAX_VALUE);
+        System.out.println("fsd" + Long.MAX_VALUE);
+        System.out.println(NumberUtils.toDouble("34.00000"));
+        System.out.println(NumberUtils.toInt("536.000000"));
+        System.out.println(parseFlightPrice("4a5"));
+        String interJson = "{\"ret\":false,\"errmsg\":\"系统错误\",\"errcode\":-1,\"data\":{}}";
+        testInterJson(interJson);
+
+        int count = 0;
+        List<String> testList1 = ImmutableList.of("1", "2");
+        for (String string1 : testList1) {
+            System.out.println(++count);
+        }
+
+        String brString = "sfaf<br>sdfd<br>";
+        brString = brString.toString().replaceAll("<br>", "，");//替换
+        if (brString.lastIndexOf("，") == brString.length() - 1) {//末尾的逗号舍去
+            brString = brString.substring(0, brString.length() - 1);
+        }
+        System.out.println("br=== " + brString);
 
 
     }
+
+    private static int parseFlightPrice(String priceString) {
+        if (StringUtils.isBlank(priceString)) {
+            return 0;
+        }
+        try {
+            BigDecimal bigDecimal = new BigDecimal(NumberUtils.toDouble(priceString));
+            return bigDecimal == null ? 0 : bigDecimal.intValue();
+        } catch (Exception e) {
+            return 0;
+        }
+
+    }
+
+    public static void testInterJson(String json) {
+        View view= JSONObject.parseObject(json, View.class);
+        System.out.print(view!=null&&view.hasData());
+    }
+
+    private static final class View{
+        Boolean ret;
+        String errmsg;
+        Integer errcode;
+        Map<String,Integer> data;
+
+        public boolean hasData(){
+            return ret!=null&&ret&&data!=null&&!data.isEmpty();
+        }
+
+        public Boolean getRet() {
+            return ret;
+        }
+
+        public void setRet(Boolean ret) {
+            this.ret = ret;
+        }
+
+        public String getErrmsg() {
+            return errmsg;
+        }
+
+        public void setErrmsg(String errmsg) {
+            this.errmsg = errmsg;
+        }
+
+        public Integer getErrcode() {
+            return errcode;
+        }
+
+        public void setErrcode(Integer errcode) {
+            this.errcode = errcode;
+        }
+
+        public Map<String, Integer> getData() {
+            return data;
+        }
+
+        public void setData(Map<String, Integer> data) {
+            this.data = data;
+        }
+
+        public String toString(){
+            return JSONObject.toJSONString(this);
+        }
+    }
+
 }

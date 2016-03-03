@@ -22,12 +22,14 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class Test {
+    private static final ImmutableList<Integer> showIssueTicketButtonStatus = ImmutableList.of(1, 5);
     public static ImmutableList<String> C_TENPAY_LINE = ImmutableList.copyOf(new String[] {"3U","CA","CN","CZ","FM","HU","JD","KN","MF","MU","NS","SC","ZH"});//出票通 财付通支持航司
     public static ImmutableList<String> C_YEELIFE_LINE = ImmutableList.copyOf(new String[] {"8L","CN","GS","HU","JD","PN","UQ"});//出票通 易生支持航司
     public static ImmutableList<String> C_YEEPAY_LINE = ImmutableList.copyOf(new String[] {"3U","8L","BK","CA","DZ","EU","FM","FU","GJ","GS","GX","HO","HU","HX","JD","KN","KY","MF","MU","NS","PN","QW","SC","TV","ZH"});//出票通 易宝支持航司
     public static ImmutableList<String> C_CHINAPNR_LINE = ImmutableList.copyOf(new String[]{"3U", "BK", "CA", "CZ", "DZ", "FM", "GJ", "HO", "KN", "KY", "MF", "MU", "NS", "SC", "TV", "ZH"});//出票通 汇付支持航司
     public static Map<String, List<Integer>> airinePurchaseTypeMap = Maps.newHashMap();
-
+    private final static String F_ISSUE_TICKET_AREA_URL =
+            "http://fuwu.qunar.com/flightorder/ordercenter/api/ticket/issueTicketArea?orderNo=%s&domain=%s&bizType=%s&ntsOrderNo=%s&ntsDomain=%s";
     public static Date addSecond(Date myDate, int amount) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(myDate);
@@ -87,6 +89,9 @@ public class Test {
         BigDecimal bigDecimal = new BigDecimal(5.25).setScale(2, BigDecimal.ROUND_HALF_UP);
         System.out.print(bigDecimal);
         System.out.println(JSON.toJSONString(getAirlinePurchaseTypeMap()));
+        System.out.println(showIssueTicketButtonStatus.contains(5));
+        System.out.println(String.format(F_ISSUE_TICKET_AREA_URL, "", "",3, "", ""));
+
 
 
     }

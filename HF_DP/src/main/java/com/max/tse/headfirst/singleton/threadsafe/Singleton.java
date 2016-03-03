@@ -7,12 +7,12 @@ public class Singleton {
  
 	private Singleton() {}
  
-	public static synchronized Singleton getInstance() {
+	public static synchronized Singleton getInstance() {//synchronized
 		if (uniqueInstance == null) {
 			uniqueInstance = new Singleton();
 		}
 		return uniqueInstance;
 	}
  
-	// other useful methods here
+	// other useful methods here synchronized
 }

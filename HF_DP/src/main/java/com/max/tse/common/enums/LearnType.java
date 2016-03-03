@@ -1,5 +1,7 @@
 package com.max.tse.common.enums;
 
+import com.alibaba.fastjson.parser.deserializer.EnumDeserializer;
+
 /**
  * Created with IntelliJ IDEA.
  * User: yuebin.xie
@@ -16,7 +18,8 @@ public enum LearnType {
     reflect("反射", JAVA),
     thread("多线程", JAVA),
     zookeeper("zookeeper", JAVA),
-    test("test", JAVA);
+    test("test", JAVA),
+    redis("redis", JAVA),
 
     ;
     LearnType(String desc, LearnType parentType) {
@@ -25,4 +28,8 @@ public enum LearnType {
     }
     public final String desc;//描述
     public final LearnType parentType;//父类
+
+    public static void main(String[] args) {
+        System.out.print(LearnType.valueOf("design"));
+    }
 }

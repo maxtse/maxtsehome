@@ -7,6 +7,7 @@ package com.max.tse.headfirst.singleton.dcl;
 
 public class Singleton {
 	private volatile static Singleton uniqueInstance;
+    //volatile synchronized Reentrantlock
  
 	private Singleton() {}
  

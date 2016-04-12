@@ -17,6 +17,8 @@
         <org.mybatis.spring.version>1.2.0</org.mybatis.spring.version>
         <org.slf4j-version>1.7.5</org.slf4j-version>
         <ch.qos-version>1.0.13</ch.qos-version>
+        <skipTests>true</skipTests>
+        <webXmlPath>src/main/webapp/WEB-INF/web.xml</webXmlPath>
     </properties>
 
     <dependencyManagement>
@@ -434,9 +436,6 @@
             <properties>
                 <env>dev</env>
             </properties>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
             <build>
                 <resources>
                     <resource>
@@ -455,9 +454,6 @@
             <properties>
                 <env>local</env>
             </properties>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
             <build>
                 <resources>
                     <resource>
@@ -474,9 +470,6 @@
             <properties>
                 <env>prod</env>
             </properties>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
             <build>
                 <resources>
                     <resource>

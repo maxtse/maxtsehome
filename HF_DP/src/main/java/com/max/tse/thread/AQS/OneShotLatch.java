@@ -16,5 +16,29 @@ public class OneShotLatch  {
 
     private class Sync extends AbstractQueuedSynchronizer {
 
+        /**
+         * 小于0 代表需要进行锁确认
+         * */
+        @Override
+        protected int tryAcquireShared(int arg) {
+            return getState() == 1 ? 1 : -1;
+        }
+
+        @Override
+        protected boolean tryReleaseShared(int arg) {
+            setState(1);//打开
+            return true;
+        }
     }
+
+    public void signal() {
+        sync.releaseShared(0);
+    }
+
+    public void await() throws Exception{
+        sync.acquireSharedInterruptibly(0);
+    }
+
+
+
 }

@@ -28,7 +28,7 @@ public class MethodTest {
             return result;
         }
         System.out.println(JSON.toJSONString(clazz.getDeclaredMethods()));
-        System.out.println(JSON.toJSONString(clazz.getMethods()));
+        System.out.println(JSON.toJSONString(clazz.getMethods()));//会获取父类的 但是都是public的
         return result;
     }
 

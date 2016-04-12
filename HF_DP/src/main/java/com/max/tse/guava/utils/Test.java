@@ -2,6 +2,7 @@ package com.max.tse.guava.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.CharMatcher;
+import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -91,6 +92,7 @@ public class Test {
         System.out.println(JSON.toJSONString(getAirlinePurchaseTypeMap()));
         System.out.println(showIssueTicketButtonStatus.contains(5));
         System.out.println(String.format(F_ISSUE_TICKET_AREA_URL, "", "",3, "", ""));
+        System.out.println(Splitter.on(",").splitToList("sdf,,").size());
 
 
 

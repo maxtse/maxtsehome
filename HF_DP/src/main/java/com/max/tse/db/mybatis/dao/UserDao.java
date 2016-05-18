@@ -4,6 +4,8 @@ import com.max.tse.db.mybatis.DaoAnnotation;
 import com.max.tse.db.mybatis.po.User;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 /**
@@ -14,6 +16,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @DaoAnnotation
+@Repository
 public interface UserDao {
 
     public User queryById(@Param("id") int id);

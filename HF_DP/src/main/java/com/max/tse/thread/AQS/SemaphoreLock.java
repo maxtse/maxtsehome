@@ -25,12 +25,12 @@ public class SemaphoreLock {
         @Override
         protected int tryAcquireShared(int arg) {
 
-            for (;;) {
+            for (;;) {//自旋锁
                 if (hasQueuedPredecessors()) {//有在等待的
                     return -1;
                 }
                 int current = getState();
-                int remaining = current = arg;
+                int remaining = current - arg;
                 if (remaining < 0 || compareAndSetState(current, remaining)) {
                     return remaining;
                 }

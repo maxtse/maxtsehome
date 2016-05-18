@@ -1,14 +1,11 @@
 package com.max.tse.redis.lock.impl;
 
 
-import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
-import com.google.common.hash.Hashing;
 import com.max.tse.redis.lock.IRedisLock;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCommands;
 
 import java.util.concurrent.TimeUnit;
@@ -21,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * To change this template use File | Settings | File Templates.
  * Note:redis实现分布式锁
  */
-public class RedisLock implements IRedisLock{
+public class RedisLock extends AbstractRedisKeyGenerator implements IRedisLock{
 
     private static final Logger logger = LoggerFactory.getLogger(RedisLock.class);
 
@@ -40,7 +37,7 @@ public class RedisLock implements IRedisLock{
         Preconditions.checkArgument(time >= 0);
         Preconditions.checkNotNull(timeUnit);
 
-        String key = generateKeyInRedis(prefix, lockKey);
+        String key = generator(prefix, lockKey, 100, new MD5RedisKeyLengthBeyondHandler());
         boolean setSuccess = false;
         try {
             Long setRet = jedisCommands.setnx(key, "1");
@@ -71,7 +68,7 @@ public class RedisLock implements IRedisLock{
     public boolean unLock(String prefix, String lockKey){
         Preconditions.checkArgument(StringUtils.isNotBlank(prefix));
         Preconditions.checkArgument(StringUtils.isNotBlank(lockKey));
-        String key = generateKeyInRedis(prefix, lockKey);
+        String key = generator(prefix, lockKey, 100, new MD5RedisKeyLengthBeyondHandler());
         try {
             Long unLockRet = jedisCommands.del(key);
             logger.info("prefix={}, lockKey={}, unLockRet={}", prefix, lockKey, unLockRet);
@@ -82,17 +79,11 @@ public class RedisLock implements IRedisLock{
         }
 
     }
-    /**
-     * 构造redis里存储的key
-     * 长度超过100 则hash
-     * 这么做的好处是：redis性能考虑 key不要过长
-     * */
-    private String generateKeyInRedis(String prefix, String lockKey) {
+
+    @Override
+    public String append(String prefix, String key) {
         prefix = StringUtils.isBlank(prefix) ? "null" : prefix;
-        String key = prefix + lockKey;
-        if (StringUtils.length(key) > 100) {
-            return Hashing.md5().newHasher().putString(key, Charsets.UTF_8).hash().toString();
-        }
-        return key;
+        return prefix + key;
     }
+
 }

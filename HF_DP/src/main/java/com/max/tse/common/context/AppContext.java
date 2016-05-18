@@ -31,5 +31,6 @@ public class AppContext {
      * */
     public static void releaseAll() {
         learnTypeLocal.remove();
+        MDC.clear();
     }
 }

@@ -32,3 +32,4 @@ Thumbs.com.max.tse.db
 # *.tar.gz
 #bin
 .bin/
+*.hprof

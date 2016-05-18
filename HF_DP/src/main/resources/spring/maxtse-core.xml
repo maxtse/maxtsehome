@@ -14,22 +14,58 @@
 
     <bean class="com.max.tse.common.utils.SpringWrapper"/>
 
-    <!-- redis配置 -->
+
     <bean id="medisShardInfo" class="com.max.tse.redis.client.MedisShardInfo">
-        <constructor-arg name="host" value="${redis.host}}"/>
-        <constructor-arg name="port" value="${redis.prot}"/>
+        <constructor-arg name="host" value="${redis.host}"/>
+        <constructor-arg name="port" value="${redis.port}"/>
         <constructor-arg name="password" value="${redis.password}"/>
     </bean>
-
-    <bean id="jedis" class="redis.clients.jedis.Jedis">
-        <constructor-arg name="shardInfo" ref="medisShardInfo"/>
+    <bean id="medis" class="redis.clients.jedis.Jedis">
+        <constructor-arg name="shardInfo" ref="medisShardInfo" type="redis.clients.jedis.JedisShardInfo"/>
     </bean>
 
-    <!-- 自动搜索非@Controller标注的类，和非拦截器 -->
+      <!-- 自动搜索非@Controller标注的类，和非拦截器 -->
     <context:component-scan base-package="com">
         <context:exclude-filter type="annotation"
                                 expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
+
+    <bean id="springBean" class="com.max.tse.spring.SpringBean"/>
+
+    <bean id="factoryCar" class="com.max.tse.spring.beanFactory.Car" init-method="myInit" destroy-method="myDestroy"/>
+
+    <bean id="carA" class="com.max.tse.spring.beanFactory.CarA">
+        <property name="carB" ref="carB"/>
+        <property name="desc" value="desca"/>
+    </bean>
+
+    <bean id="carB" class="com.max.tse.spring.beanFactory.CarB">
+        <property name="carA" ref="carA"/>
+        <property name="descB" value="descB"/>
+    </bean>
+
+    <!-- redis-->
+    <bean id="redisStringService" class="com.max.tse.redis.api.impl.RedisStringServiceImpl">
+        <constructor-arg name="jedis" ref="medis"/>
+    </bean>
+
+    <bean id="redisBaseService" class="com.max.tse.redis.api.impl.RedisBaseServiceImpl">
+        <constructor-arg name="jedis" ref="medis"/>
+    </bean>
+
+    <bean id="redisNumberService" class="com.max.tse.redis.api.impl.RedisNumberServiceImpl">
+        <constructor-arg name="jedis" ref="medis"/>
+    </bean>
+
+    <bean id="redisHashService" class="com.max.tse.redis.api.impl.RedisHashServiceImpl">
+        <constructor-arg name="jedis" ref="medis"/>
+    </bean>
+
+    <bean id="redisLock" class="com.max.tse.redis.lock.impl.RedisLockImpl">
+        <constructor-arg name="jedis" type="redis.clients.jedis.Jedis" ref="medis"/>
+    </bean>
+
+
 
 
 </beans>

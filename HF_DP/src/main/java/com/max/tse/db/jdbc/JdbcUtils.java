@@ -37,8 +37,17 @@ public class JdbcUtils {
 
     public static final String JDBC_PASSWORD = "mysql";//数据库密码
 
+    static {
+        try {
+            Class.forName(JDBC_DRIVER);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public static Connection getConnection() throws Exception{
-        Class.forName(JDBC_DRIVER);
         Connection con = DriverManager.getConnection(JDBC_URL, JDBC_USERNAME, JDBC_PASSWORD);
         return con;
     }

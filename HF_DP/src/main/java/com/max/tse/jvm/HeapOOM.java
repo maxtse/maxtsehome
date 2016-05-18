@@ -11,8 +11,10 @@ import java.util.List;
  * Time: 下午7:26
  * To change this template use File | Settings | File Templates.
  * Note:堆溢出
+ * 堆溢出 很好造 就是声明对象就好了
  */
 public class HeapOOM {
+
 
     static class OOMObject {
 
@@ -22,6 +24,7 @@ public class HeapOOM {
         while(true) {
             oomObjectList.add(new OOMObject());
         }
+
 
     }
 }

@@ -1,10 +1,16 @@
 package com.max.tse.redis.client;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Maps;
+import com.max.tse.po.Result;
+import com.max.tse.redis.api.RedisBaseService;
+import com.max.tse.redis.api.RedisNumberService;
+import com.max.tse.redis.api.RedisStringService;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,22 +24,89 @@ import javax.annotation.Resource;
 public class SimpleRedisTestService {
 
     @Resource
-    Jedis jedis;
+    RedisNumberService redisNumberService;
+
+    @Resource
+    RedisStringService redisStringService;
+
+    @Resource
+    RedisBaseService redisBaseService;
 
     public void set(String key, String value) {
-        Preconditions.checkNotNull(key);
-        jedis.set(key, value);
+        redisStringService.setKey(key, value);
     }
 
     public String get(String key) {
-        Preconditions.checkNotNull(key);
-        return jedis.get(key);
+        return redisStringService.get(key);
     }
 
-    public String del(String key) {
-        long result = jedis.del(key);
-        return result + "";
+    public boolean del(String key) {
+        return redisBaseService.del(key);
     }
+
+    public Result testString() throws Exception{
+        Result result = Result.emptyResult();
+        result.addData("redisTest", "testString");
+        //set key
+        boolean setKeyResult = redisStringService.setKey("stringTest", "stringTest");
+        result.addData("setKeyResult", setKeyResult);
+
+        //getKey
+        String getKeyResult = redisStringService.get("stringTest");
+        result.addData("getKeyResult", getKeyResult);
+
+        //getSet
+        String getSetResult = redisStringService.getSet("stringTest", "stringTest1");
+        result.addData("getSetResult", getSetResult);
+        result.addData("getKeyResultNew", redisStringService.get("stringTest"));
+
+        //setnx
+        boolean setnxResult = redisStringService.setnx("stringTest", "stringTest");
+        result.addData("setnxResult ex", setnxResult);
+        boolean setnxResultN = redisStringService.setnx("stringTestNx", "stringTest");
+        result.addData("setnxResult nx", setnxResultN);
+
+        //setEx
+        boolean setExResult = redisStringService.setEx("stringTestEx", "stringTest", 5);
+        result.addData("setExResult", setExResult);
+        result.addData("stringTestEx first get", redisStringService.get("stringTestEx"));
+        long ttlResult = redisBaseService.ttl("stringTestEx");
+        result.addData("ttlResult", ttlResult);
+        Thread.sleep(ttlResult * 1000);
+        result.addData("stringTestEx second get", redisStringService.get("stringTestEx"));
+
+        //setEx high
+        result.addData("setExResultHigh", redisStringService.setEx("stringExHigh", "stringTest", 5));
+        result.addData("getExResultHigh", redisStringService.get("stringExHigh"));
+        result.addData("ttlResultFirst", redisBaseService.ttl("stringExHigh"));
+        redisStringService.setEx("stringExHigh", "stringTest", 10);
+        result.addData("getExResultHighSecond", redisStringService.get("stringExHigh"));
+        result.addData("ttlResultSecond", redisBaseService.ttl("stringExHigh"));
+
+        //strlen
+        result.addData("strlenResult", redisStringService.strlen("stringTest"));
+
+        //getRange
+        result.addData("getrangeResult", redisStringService.getRange("stringTest", 0, 2));
+        result.addData("getrangeResult1", redisStringService.getRange("stringTest", 0, -1));
+
+        //mget
+        result.addData("mgetResult", redisStringService.mget("stringTestEx", "stringTest"));
+
+        //mset
+        Map<String, String> testKeyValueMap = Maps.newHashMap();
+        testKeyValueMap.put("msetKey1", "msetValue1");
+        testKeyValueMap.put("msetKey2", "msetValue2");
+        result.addData("msetValue", redisStringService.mset(testKeyValueMap));
+        result.addData("msetValueget", redisStringService.mget(testKeyValueMap.keySet().toArray(new String[]{})));
+        return result;
+    }
+
+    public void testHash() {
+
+    }
+
+
 
 
 }

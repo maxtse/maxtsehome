@@ -6,5 +6,8 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd"
        default-lazy-init="false">
     <!-- 拦截器 -->
-
+    <mvc:interceptors>
+        <bean id="myHandlerInterceptor" class="com.max.tse.web.interceptor.MyHandlerInterceptor"/>
+        <bean id="logHandlerInterceptor" class="com.max.tse.web.interceptor.LogHandlerInterceptor"/>
+    </mvc:interceptors>
 </beans>

@@ -25,7 +25,7 @@
 
 
     <typeHandlers>
-        <typeHandler  handler="com.max.tse.db.mybatis.handler.MyTypeHandler"/>
+        <typeHandler handler="com.max.tse.db.mybatis.handler.MyTypeHandler"/>
     </typeHandlers>
 
      <!-- plugins 可以设置属性值 -->

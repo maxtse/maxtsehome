@@ -10,13 +10,19 @@ import com.max.tse.http.httpclient.FileUploadService;
 import com.max.tse.po.Result;
 import com.max.tse.redis.client.SimpleRedisTestService;
 import com.max.tse.reflect.tairTree.pojo.AgeType;
+import com.max.tse.spring.aop.ToWeave;
+import com.max.tse.spring.aop.annoation.ParamLogMonitor;
+import com.max.tse.spring.aop.annoation.ResultLogMonitor;
+import com.max.tse.web.annoation.LogInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +45,9 @@ public class TestController {
     @Resource
     private FileUploadService fileUploadService;
 
+    @Resource
+    private ToWeave toWeave;
+
     public static final Logger logger = LoggerFactory.getLogger(TestController.class);
 
 
@@ -47,12 +56,15 @@ public class TestController {
     private static final String SOURCE = "fuwu.max.tse";
 
 
-
     @RequestMapping("/first")
     @ResponseBody
     public Result test(@RequestParam("username") String username) {
         AppContext.setLearnType(LearnType.test);
         logger.info("test param={}", new Object[]{username});
+        toWeave.testAround(username, "TestControllerpassword11232");
+        toWeave.testBefore(username, "TestControllerpassword_before");
+        toWeave.testAfterReturning(username, "TestControllerpasswordreturn");
+        toWeave.testAfterReturning1(username, 15);
         AppContext.releaseAll();
         return Result.successResult().addData("username", username);
     }
@@ -137,7 +149,29 @@ public class TestController {
         return Result.successResult();
 
     }
+    @LogInterceptor
+    @RequestMapping("/myJsp")
+    public ModelAndView myJsp(@RequestParam("username") String username) {
+        ModelAndView result = new ModelAndView("myJsp");
+        result.addObject("data", "{username:" + username + "}");
+        return result;
+    }
 
+    @LogInterceptor
+    @RequestMapping("/path/{username}")
+    public ModelAndView testPath2(@PathVariable("username") String username) {
+        ModelAndView result = new ModelAndView("myJsp");
+        result.addObject("data", "username:" + username + "}");
+        return result;
+    }
+
+    @LogInterceptor
+    @RequestMapping("/MyVm")
+    public ModelAndView myVm(@RequestParam("username") String username) {
+        ModelAndView result = new ModelAndView("MyVm");
+        result.addObject("username", username);
+        return result;
+    }
 
 
 }

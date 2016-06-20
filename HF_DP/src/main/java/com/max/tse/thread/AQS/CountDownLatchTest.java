@@ -2,6 +2,7 @@ package com.max.tse.thread.AQS;
 
 import com.google.common.collect.Lists;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
@@ -32,23 +33,29 @@ public class CountDownLatchTest {
             workerList.add(new Worker());
             workerList.add(new Worker());
 
+
             final CountDownLatch countDownLatch = new CountDownLatch(workerList.size());
             List<Future> futures = Lists.newArrayList();
+            System.out.println(" i start waiting " + new Date());
             for (final Worker worker : workerList) {
                 Future<Object> future = THREAD_POOL.submit(new Callable<Object>() {
                     @Override
                     public Object call() throws Exception {
+                        Object result = null;
                         try {
-                            return worker.call();
+                            result = worker.call();
+                            return result;
 
                         } finally {
+                            System.out.println(result);
                             countDownLatch.countDown();
                         }
                     }
                 });
                 futures.add(future);
             }
-            countDownLatch.await(3, TimeUnit.SECONDS);
+            countDownLatch.await();//acquireSharedInterruptibly()
+            System.out.println("end " + new Date());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,8 +65,9 @@ public class CountDownLatchTest {
         @Override
         public Object call() throws Exception {
             try {
+                System.out.println("i awake");
                 Thread.sleep(5000);
-                return "";
+                return "wake";
             } catch (Exception e) {
                 return "";
             }

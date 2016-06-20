@@ -2,11 +2,15 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
+
 			http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			 http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 			http://www.springframework.org/schema/context
 			http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+
        default-lazy-init="false">
     <context:annotation-config/>
     <context:property-placeholder location="classpath*:*.properties" ignore-unresolvable="true"/>
@@ -64,6 +68,39 @@
     <bean id="redisLock" class="com.max.tse.redis.lock.impl.RedisLockImpl">
         <constructor-arg name="jedis" type="redis.clients.jedis.Jedis" ref="medis"/>
     </bean>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <aop:config proxy-target-class="true">
+        <aop:aspect ref="weaver1">
+            <aop:pointcut id="afterReturningPoint" expression="within(com.max.tse..*.ToWeave) and args(String, int)"/><!-- 绑定入参 这里遇到问题是within用模糊匹配：*.*Weave 无法匹配，得告诉他你的包 以及是否子包查询-->
+            <aop:after-returning method="afterReturning" pointcut-ref="afterReturningPoint"/>
+        </aop:aspect>
+    </aop:config>
+
+    <bean id="weaver1" class="com.max.tse.spring.aop.Weaver1"/>
+
+    <!-- 只是用于模板 不用于页面展示 -->
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="resourceLoaderPath" value="classpath:/vm/"/>
+        <property name="velocityPropertiesMap">
+            <props>
+                <prop key="input.encoding">UTF-8</prop>
+                <prop key="output.encoding">UTF-8</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="velocityTemplateService" class="com.max.tse.spring.template.VelocityTemplateService">
+        <constructor-arg ref="velocityEngine"/>
+        <constructor-arg>
+            <map>
+                <entry key="firstVm" value="firstVm.vm"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+
+
 
 
 

@@ -9,7 +9,7 @@ package com.max.tse.thread.self;
  * Note:测试join()方法
  * join方法实际上调用了Object.wait方法
  * 可以看出，Join方法实现是通过wait（小提示：Object 提供的方法）。
- * 当main线程调用t.join时候，main线程会获得线程对象t的锁（wait 意味着拿到该对象的锁),调用该对象的wait(等待时间)，直到该对象唤醒main线程 ，比如退出后。这就意味着main 线程调用t.join时，必须能够拿到线程t对象的锁。
+ * main 线程调用t.join时，必须能够拿到线程t对象的锁，如果拿不到它是无法wait的 ，刚开的例子t.join(1000)不是说明了main线程等待1 秒，如果在它等待之前，其他线程获取了t对象的锁，它等待时间可不就是1毫秒了 。
  */
 public class TestJoin {
 
@@ -35,7 +35,7 @@ public class TestJoin {
         public void run() {
             System.out.println("进入线程" + Thread.currentThread().getName());
             try {
-                Thread.sleep(5000);
+                Thread.sleep(15000);
             } catch (InterruptedException e) {
 
             }

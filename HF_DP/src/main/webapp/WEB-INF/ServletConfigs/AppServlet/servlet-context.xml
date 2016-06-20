@@ -43,8 +43,17 @@
     </bean>
 
 
+    <bean id="multiViewResolver" class="com.max.tse.web.resolver.MultiViewResolver">
+        <property name="viewResolverMap">
+            <map key-type="java.lang.String" value-type="org.springframework.web.servlet.ViewResolver">
+                <entry key="jsp" value-ref="jspViewResolver"/>
+                <entry key="vm" value-ref="vmViewResolver"/>
+            </map>
+        </property>
+        <property name="order" value="0"/>
+    </bean>
 
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+    <bean id="vmViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
         <property name="suffix" value=".vm"/>
         <!--数字格式化-->
         <property name="numberToolAttribute" value="numberTool"/>
@@ -57,17 +66,12 @@
         <property name="order" value="5"></property>
     </bean>
     <!-- 视图解析器-->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <!-- 上传文件解析器 如果配置了则会加载 否则不会加载 bean 的id必须是这个 dispatchServlet中没有默认实现
-     这个Resolver里也是用的apache fileupload组件实现的 所以用这个必须添加依赖-->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="defaultEncoding" value="UTF-8"/>
-        <property name="maxUploadSize" value="10484960"/>
-    </bean>
+
     <bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
         <property name="resourceLoaderPath" value="/WEB-INF/views/vm/"/>
         <property name="velocityProperties">
@@ -85,6 +89,13 @@
                 </prop>
             </props>
         </property>
+    </bean>
+
+    <!-- 上传文件解析器 如果配置了则会加载 否则不会加载 bean 的id必须是这个 dispatchServlet中没有默认实现
+     这个Resolver里也是用的apache fileupload组件实现的 所以用这个必须添加依赖-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="maxUploadSize" value="10484960"/>
     </bean>
 
 

@@ -13,8 +13,7 @@
     <title></title>
 </head>
 <body>
-${username}
 <c:out value="${data}"/>
-${data}
+i am jsp
 </body>
 </html>

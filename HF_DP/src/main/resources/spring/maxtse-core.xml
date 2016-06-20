@@ -95,6 +95,7 @@
         <constructor-arg>
             <map>
                 <entry key="firstVm" value="firstVm.vm"/>
+                <entry key="userVm" value="userVm.vm"/>
             </map>
         </constructor-arg>
     </bean>

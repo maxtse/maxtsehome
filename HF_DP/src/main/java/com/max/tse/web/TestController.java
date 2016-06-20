@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.max.tse.common.context.AppContext;
 import com.max.tse.common.enums.LearnType;
+import com.max.tse.db.mybatis.po.User;
 import com.max.tse.guava.eventBus.EventBusFactory;
 import com.max.tse.guava.eventBus.EventBusRequest;
 import com.max.tse.http.httpclient.FileUploadService;
@@ -13,11 +14,13 @@ import com.max.tse.reflect.tairTree.pojo.AgeType;
 import com.max.tse.spring.aop.ToWeave;
 import com.max.tse.spring.aop.annoation.ParamLogMonitor;
 import com.max.tse.spring.aop.annoation.ResultLogMonitor;
+import com.max.tse.spring.template.VelocityTemplateService;
 import com.max.tse.web.annoation.LogInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,6 +47,9 @@ public class TestController {
 
     @Resource
     private FileUploadService fileUploadService;
+
+    @Resource
+    private VelocityTemplateService velocityTemplateService;
 
     @Resource
     private ToWeave toWeave;
@@ -168,10 +174,33 @@ public class TestController {
     @LogInterceptor
     @RequestMapping("/MyVm")
     public ModelAndView myVm(@RequestParam("username") String username) {
-        ModelAndView result = new ModelAndView("MyVm");
+        ModelAndView result = new ModelAndView("MyVm.vm");
         result.addObject("username", username);
         return result;
     }
 
+    @LogInterceptor
+    @RequestMapping("/template/vm")
+    public ModelAndView testTemplateVm(@ModelAttribute("user") User user) {
+        Map<String, Object> paramMap = Maps.newHashMap();
+        paramMap.put("user", user);
+        String templateString = velocityTemplateService.transform("userVm", paramMap);
+        logger.info("templateString={}", templateString);
+
+        ModelAndView modelAndView = new ModelAndView("myJsp");
+        modelAndView.addObject("data", templateString);
+        return modelAndView;
+
+    }
+
+    @ModelAttribute("user")
+    public User getUser() {
+        User user = new User();
+        user.setAgeType(com.max.tse.db.mybatis.enums.AgeType.ADULT);
+        user.setUsername("max tse");
+        user.setPassword("maxtse2133");
+        user.setId(1);
+        return user;
+    }
 
 }

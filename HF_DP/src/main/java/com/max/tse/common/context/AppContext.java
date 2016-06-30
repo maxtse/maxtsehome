@@ -14,6 +14,8 @@ public class AppContext {
 
     private static InheritableThreadLocal<LearnType> learnTypeLocal = new InheritableThreadLocal<>();//学习类型
 
+    private static InheritableThreadLocal<String> orderNoHolder = new InheritableThreadLocal<String>();
+
     public static LearnType getLearnType() {
         return learnTypeLocal.get();
     }
@@ -25,12 +27,24 @@ public class AppContext {
         }
     }
 
+    public static void setOrderNo(String orderNo) {
+        orderNoHolder.set(orderNo);
+        if (orderNo != null) {
+            MDC.put("orderNo", orderNo);
+        }
+    }
+
+    public static String getOrderNo() {
+        return orderNoHolder.get();
+    }
+
 
     /**
      * 清空线程变量
      * */
     public static void releaseAll() {
         learnTypeLocal.remove();
+        orderNoHolder.remove();
         MDC.clear();
     }
 }

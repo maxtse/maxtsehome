@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  * Date: 16-6-18
  * Time: 下午11:27
  * To change this template use File | Settings | File Templates.
+ * Note：我们为什么要用request
  */
 public class MyHandlerInterceptor extends HandlerInterceptorAdapter {
 

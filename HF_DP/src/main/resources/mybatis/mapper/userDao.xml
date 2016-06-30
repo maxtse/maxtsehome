@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.max.tse.db.mybatis.dao.UserDao">
 
-    <sql id="tableName">user_test</sql>
+    <sql id="tableName">order_info</sql>
     <sql id="insertSql">username,password,age_type</sql>
     <sql id="querySql">id,<include refid="insertSql"/></sql>
     

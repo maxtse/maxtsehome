@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -201,6 +202,12 @@ public class TestController {
         user.setPassword("maxtse2133");
         user.setId(1);
         return user;
+    }
+
+    @ExceptionHandler
+    public ModelAndView handleException(RuntimeException re, HttpServletRequest request) {
+        logger.error(request.getRequestURI() + "error", re);
+        return new ModelAndView("error");
     }
 
 }

@@ -5,6 +5,7 @@ import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
+import com.google.common.hash.HashCode;
 import com.google.common.hash.Hasher;
 import com.google.common.hash.Hashing;
 
@@ -28,6 +29,11 @@ public class MD5Util {
         return hashing.putString(key, Charsets.UTF_8).hash().toString();
     }
 
+    public static HashCode hashCode(String key) {
+        Hasher hashing = Hashing.md5().newHasher();
+        return hashing.putString(key, Charsets.UTF_8).hash();
+    }
+
     public static void main(String[] args) {
         List<String> testString = Lists.newArrayList();
         testString.add("test");
@@ -39,5 +45,6 @@ public class MD5Util {
             }
         });
         System.out.println(optional.isPresent() );
+        System.out.println(hash("abc20160606123"));
     }
 }

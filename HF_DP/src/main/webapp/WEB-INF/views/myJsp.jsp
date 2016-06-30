@@ -14,6 +14,7 @@
 </head>
 <body>
 <c:out value="${data}"/>
+<jsp:text><%= request.getParameter("data")%></jsp:text>
 i am jsp
 </body>
 </html>

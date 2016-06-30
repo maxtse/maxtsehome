@@ -58,7 +58,7 @@ public class FileUploadService {
     static {
         client.getHttpConnectionManager().getParams().setConnectionTimeout(30000);
         client.getHttpConnectionManager().getParams().setMaxTotalConnections(100);
-        client.getParams().setVersion(HttpVersion.HTTP_1_0);
+        client.getHttpConnectionManager().getParams().setSoTimeout(5000);
     }
 
 

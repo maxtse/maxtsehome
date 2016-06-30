@@ -3,7 +3,7 @@
     <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
     <property name="LOG_HOME" value="${catalina.base}/logs" />
     <property name="encoding" value="UTF-8"/>
-    <property name="normal-pattern" value = "%d{yyyy-MM-dd.HH:mm:ss} %-5level [%thread] %logger{10}.%M:%L [%X{learnType}] %msg%n"/>
+    <property name="normal-pattern" value = "%d{yyyy-MM-dd.HH:mm:ss} %-5level [%thread] %logger{10}.%M:%L [%X{learnType}] [%X{orderNo}] %msg%n"/>
     <!--<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>
     </contextListener>

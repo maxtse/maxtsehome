@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+
+			http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			 http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+
+       default-lazy-init="false">
+    <context:annotation-config/>
+    <context:property-placeholder location="classpath*:*.properties" ignore-unresolvable="true"/>
+
+    <bean id="parentDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <!-- 最大连接数量-->
+        <property name="maxActive" value="100"/>
+        <!-- 最大空闲数量-->
+        <property name="maxIdle" value="20"/>
+        <!-- 最小空闲数量-->
+        <property name="minIdle" value="5"/>
+        <!-- 初始化连接-->
+        <property name="initialSize" value="30"/>
+        <!-- 超时时间-->
+        <property name="removeAbandonedTimeout" value="10"/>
+        <!-- 连接泄漏时是否打印-->
+        <property name="logAbandoned" value="true"/>
+        <!-- 是否自动回收超时连接-->
+        <property name="removeAbandoned" value="true"/>
+        <!-- 超时等待时间-->
+        <property name="maxWait" value="1000"/>
+        <!-- 检测线程的间隔时间-->
+        <property name="timeBetweenEvictionRunsMillis" value="10000"/>
+        <!-- 检测线程每次检测连接的数量-->
+        <property name="numTestsPerEvictionRun" value="10"/>
+        <!-- 空闲超过多少时间需要检测-->
+        <property name="minEvictableIdleTimeMillis" value="10000"/>
+        <!-- 检测连接的语句-->
+        <property name="validationQuery" value="SELECT 1"/>
+    </bean>
+
+   <bean id="dataSource" parent="parentDataSource">
+       <property name="url" value="${jdbc.url}"/>
+       <property name="username" value="${jdbc.username}"/>
+       <property name="password" value="${jdbc.password}"/>
+   </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath*:mybatis/mapper/*.xml"/>
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+    </bean>
+    <!-- 自动扫描mapper接口 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="annotationClass" value="com.max.tse.db.mybatis.DaoAnnotation"/>
+        <property name="basePackage" value="com.max.tse.db.mybatis.dao"/>
+    </bean>
+
+    <context:component-scan base-package="com.max.tse.db.mybatis.dao"/>
+
+</beans>

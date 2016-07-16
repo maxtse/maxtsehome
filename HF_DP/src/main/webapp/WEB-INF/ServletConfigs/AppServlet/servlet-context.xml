@@ -3,25 +3,22 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/aop
             http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
       http://www.springframework.org/schema/context  
       http://www.springframework.org/schema/context/spring-context-3.0.xsd
-      http://www.springframework.org/schema/p
-      http://www.springframework.org/schema/context/spring-p-3.0.xsd
-
       http://www.springframework.org/schema/util
-      http://www.springframework.org/schema/util/spring-util-2.0.xsd
-      http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd"
+      http://www.springframework.org/schema/util/spring-util-2.0.xsd"
        default-lazy-init="false">
     <context:annotation-config/>
     <aop:aspectj-autoproxy proxy-target-class="true"/>
+
     <!-- 装配控制器 可以获取method对象 基于注解来处理比较方便 -->
-    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+    </bean>
 
     <!--annotation 处理器适配器 包含了http信息转换器 messageConverters-->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
@@ -31,6 +28,7 @@
                 <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
             </util:list>
         </property>
+        <property name="order" value="0"/>
     </bean>
 
     <!-- http信息转换器 -->
@@ -69,6 +67,7 @@
     <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
+        <property name="order" value="2"/>
     </bean>
 
 
@@ -98,6 +97,15 @@
         <property name="maxUploadSize" value="10484960"/>
     </bean>
 
+    <!--<mvc:annotation-driven conversion-service="conversionService"/>
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.max.tse.web.converter.StringToArrayConverter"/>
+            </set>
+        </property>
+    </bean>
+-->
 
     <!-- 自动搜索@Controller标注的类 -->
     <context:component-scan base-package="com">

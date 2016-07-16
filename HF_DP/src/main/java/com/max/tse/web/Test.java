@@ -18,4 +18,11 @@ public class Test {
             System.out.println(e.fillInStackTrace());
         }
     }
+
+    public static void  test() {
+        synchronized(new Object()) {
+
+        }
+
+    }
 }

@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.max.tse.common.context.AppContext;
 import com.max.tse.common.enums.LearnType;
+import com.max.tse.db.mybatis.dao.UserDao;
 import com.max.tse.db.mybatis.po.User;
+import com.max.tse.db.mybatis.service.UserService;
 import com.max.tse.guava.eventBus.EventBusFactory;
 import com.max.tse.guava.eventBus.EventBusRequest;
 import com.max.tse.http.httpclient.FileUploadService;
@@ -30,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -55,12 +58,20 @@ public class TestController {
     @Resource
     private ToWeave toWeave;
 
+    @Resource
+    private UserDao userDao;
+
+    @Resource
+    private UserService userService;
+
     public static final Logger logger = LoggerFactory.getLogger(TestController.class);
 
 
     private static final String TEST_URL = "http://localhost:8080/max/tse/test/upload?orderNo=cnb160411214010402&source=source";
 
     private static final String SOURCE = "fuwu.max.tse";
+
+
 
 
     @RequestMapping("/first")
@@ -194,13 +205,30 @@ public class TestController {
 
     }
 
+    @LogInterceptor
+    @RequestMapping("/mybatis")
+    @ResponseBody
+    public Object testMybatis(@ModelAttribute("user") User user) {
+        logger.info("mybatis user={}", JSON.toJSONString(user));
+        userDao.addUser(user);
+        return Result.successResult();
+    }
+
+    @LogInterceptor
+    @RequestMapping("/testCache")
+    @ResponseBody
+    public Object testMybatisCache() {
+        User user = userService.queryTwice(100465);
+        return Result.successResult().addData("user", user);
+    }
+
     @ModelAttribute("user")
     public User getUser() {
         User user = new User();
         user.setAgeType(com.max.tse.db.mybatis.enums.AgeType.ADULT);
         user.setUsername("max tse");
         user.setPassword("maxtse2133");
-        user.setId(1);
+        user.setId(100670);
         return user;
     }
 

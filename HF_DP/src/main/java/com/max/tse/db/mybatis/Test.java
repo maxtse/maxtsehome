@@ -52,17 +52,18 @@ public class Test {
     public static void main(String[] args) {
         System.out.println(Executor.class.getInterfaces());
         Test test = new Test();
-        /*try {
+        test.testMybatis();
+       /* try {
 
             Resources.getResourceAsReader("mybatis/mybatis-config.xml");
         } catch (Exception e) {
             e.printStackTrace();
 
         }*/
-        for (int i =0; i < 100000; i++) {
+        /*for (int i =0; i < 100000; i++) {
             test.testMybatis();
 
-        }
+        }*/
 
 
     }

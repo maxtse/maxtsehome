@@ -26,4 +26,5 @@ public interface UserDao {
     public int deleteUser(@Param("id") int id);
 
     public int updateUser(@Param("id") int id, @Param("password") String password);
+
 }

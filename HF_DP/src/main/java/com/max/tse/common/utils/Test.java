@@ -82,6 +82,23 @@ public class Test {
         }
         System.out.println("br=== " + brString);
 
+        String json = "{\"m\n" +
+                "essageId\":\"160720.185657.10.86.54.165.8268.2545\",\"subject\":\"flightqm.pnrsys.pnrinfos.betac\",\"attrs\":{\"qmq_createTIme\":1469012217419,\"qmq_traceId\":\"f_pnr_pnrsys_160720.185657.10.86.54.165.8268.124203_1\",\"qm\n" +
+                "q_prefix\":\"flightqm.pnrsys.pnrinfos.betac\",\"qmq_spanId\":\"1.1\",\"pnrInfosJson\":\"{\\\"flightInfos\\\":\\\"[{\\\\\\\"actionCode\\\\\\\":\\\\\\\"HK\\\\\\\",\\\\\\\"arrivalCity\\\\\\\":\\\\\\\"KMG\\\\\\\",\\\\\\\"arrivalTime\\\\\\\":\\\\\\\"13:00:00\\\\\\\",\\\\\\\"cab\n" +
+                "in\\\\\\\":\\\\\\\"Y\\\\\\\",\\\\\\\"departureCity\\\\\\\":\\\\\\\"PEK\\\\\\\",\\\\\\\"departureDate\\\\\\\":\\\\\\\"2016-08-30\\\\\\\",\\\\\\\"departureTime\\\\\\\":\\\\\\\"08:10:00\\\\\\\",\\\\\\\"flightNum\\\\\\\":\\\\\\\"3U8838\\\\\\\",\\\\\\\"id\\\\\\\":7990,\\\\\\\"isShare\\\\\\\":false,\\\\\\\n" +
+                "\"mainFlightNum\\\\\\\":\\\\\\\"3U8838\\\\\\\",\\\\\\\"pnrId\\\\\\\":7833,\\\\\\\"realFlightNum\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"share\\\\\\\":false}]\\\",\\\"newPnrInfos\\\":\\\"{\\\\\\\"actionCode\\\\\\\":\\\\\\\"HK\\\\\\\",\\\\\\\"available\\\\\\\":false,\\\\\\\"bound\\\\\\\":false,\\\\\\\"\n" +
+                "canceled\\\\\\\":false,\\\\\\\"canceledButHasError\\\\\\\":false,\\\\\\\"contactTel\\\\\\\":\\\\\\\"15890790679\\\\\\\",\\\\\\\"createTime\\\\\\\":1469012217000,\\\\\\\"creator\\\\\\\":\\\\\\\"sys\\\\\\\",\\\\\\\"exeOfficeId\\\\\\\":\\\\\\\"SZX403\\\\\\\",\\\\\\\"exeType\\\\\\\":\\\n" +
+                "\\\\\"IBE\\\\\\\",\\\\\\\"id\\\\\\\":7833,\\\\\\\"invalid\\\\\\\":false,\\\\\\\"invalidButHasError\\\\\\\":false,\\\\\\\"maxTimeToLive\\\\\\\":1000,\\\\\\\"new\\\\\\\":false,\\\\\\\"numOfPassenger\\\\\\\":1,\\\\\\\"numOfSegment\\\\\\\":1,\\\\\\\"officeId\\\\\\\":\\\\\\\"SZX403\\\\\\\n" +
+                "\",\\\\\\\"pnr\\\\\\\":\\\\\\\"A9150S\\\\\\\",\\\\\\\"qunardid\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"riskLevel\\\\\\\":0,\\\\\\\"source\\\\\\\":\\\\\\\"f.tts.smart.pnr\\\\\\\",\\\\\\\"status\\\\\\\":\\\\\\\"d\\\\\\\",\\\\\\\"statusCode\\\\\\\":4,\\\\\\\"supplierTel\\\\\\\":\\\\\\\"010-89677788\\\\\\\",\\\\\\\"\n" +
+                "timeToLive\\\\\\\":1469012817000,\\\\\\\"tryCancelCount\\\\\\\":0,\\\\\\\"type\\\\\\\":0,\\\\\\\"updateTime\\\\\\\":1469012217000,\\\\\\\"used\\\\\\\":true}\\\",\\\"oldPnrInfos\\\":\\\"{\\\\\\\"actionCode\\\\\\\":\\\\\\\"HK\\\\\\\",\\\\\\\"available\\\\\\\":true,\\\\\\\"bound\\\n" +
+                "\\\\\":true,\\\\\\\"canceled\\\\\\\":false,\\\\\\\"canceledButHasError\\\\\\\":false,\\\\\\\"contactTel\\\\\\\":\\\\\\\"15890790679\\\\\\\",\\\\\\\"createTime\\\\\\\":1469012217000,\\\\\\\"creator\\\\\\\":\\\\\\\"sys\\\\\\\",\\\\\\\"exeOfficeId\\\\\\\":\\\\\\\"SZX403\\\\\\\",\\\\\\\"\n" +
+                "exeType\\\\\\\":\\\\\\\"IBE\\\\\\\",\\\\\\\"id\\\\\\\":7833,\\\\\\\"invalid\\\\\\\":false,\\\\\\\"invalidButHasError\\\\\\\":false,\\\\\\\"maxTimeToLive\\\\\\\":1000,\\\\\\\"new\\\\\\\":false,\\\\\\\"numOfPassenger\\\\\\\":1,\\\\\\\"numOfSegment\\\\\\\":1,\\\\\\\"officeId\\\\\\\":\n" +
+                "\\\\\\\"SZX403\\\\\\\",\\\\\\\"pnr\\\\\\\":\\\\\\\"A9150S\\\\\\\",\\\\\\\"qunardid\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"riskLevel\\\\\\\":0,\\\\\\\"source\\\\\\\":\\\\\\\"f.tts.smart.pnr\\\\\\\",\\\\\\\"status\\\\\\\":\\\\\\\"b\\\\\\\",\\\\\\\"statusCode\\\\\\\":1,\\\\\\\"supplierTel\\\\\\\":\\\\\\\"010-8967\n" +
+                "7788\\\\\\\",\\\\\\\"timeToLive\\\\\\\":1469012817000,\\\\\\\"tryCancelCount\\\\\\\":0,\\\\\\\"type\\\\\\\":0,\\\\\\\"updateTime\\\\\\\":1469012217000,\\\\\\\"used\\\\\\\":false}\\\",\\\"orderNo\\\":\\\"cta160720185631123\\\",\\\"passengerInfos\\\":\\\"[{\\\\\\\"birthd\n" +
+                "ay\\\\\\\":\\\\\\\"1980-01-10 00:00:00.0\\\\\\\",\\\\\\\"cardNum\\\\\\\":\\\\\\\"E1509049\\\\\\\",\\\\\\\"cardType\\\\\\\":\\\\\\\"PP\\\\\\\",\\\\\\\"id\\\\\\\":9288,\\\\\\\"name\\\\\\\":\\\\\\\"王兰兰\\\\\\\",\\\\\\\"pnrId\\\\\\\":7833,\\\\\\\"type\\\\\\\":\\\\\\\"ADULT\\\\\\\"}]\\\"}\",\"qmq_regist\n" +
+                "ry\":\"zookeeper://zk.beta.corp.qunar.com:2181?backup=zk1.beta.corp.qunar.com:2181,zk2.beta.corp.qunar.com:2181,zk3.beta.corp.qunar.com:2181&group=/qmq/broker/group/new\",\"qmq_expireTime\":1469015817419,\"qmq_r\n" +
+                "eliabilityLevel\":\"High\",\"qmq_times\":1,\"qmq_brokerGroupName\":\"new\",\"qmq_consumerGroupName\":\"fuwu_ticket_platform\"}}";
+
 
     }
 

@@ -42,6 +42,7 @@ public class Test {
             public int updateUser(@Param("id") int id, @Param("password") String password) {
                 return 0;
             }
+
         }));
         userDao.getClass();
         System.out.println(userDao.addUser(new User()));

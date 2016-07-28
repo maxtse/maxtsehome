@@ -45,17 +45,14 @@ public class Weaver {
 
 
             ParamLogMonitor paramLogMonitor = method.getAnnotation(ParamLogMonitor.class);
-
             if (paramLogMonitor != null) {
                 logger.info(paramLogMonitor.value() + " = {}", JSON.toJSONString(point.getArgs()));
             }
-
+            Object result = point.proceed();
             ResultLogMonitor resultLogMonitor = method.getAnnotation(ResultLogMonitor.class);
             if (resultLogMonitor != null) {
-                Object result = point.proceed();
                 logger.info(resultLogMonitor.value() + " = {}", JSON.toJSONString(result));
             }
-
 
         } catch (Throwable t) {
             logger.error(method.getDeclaringClass().getSimpleName() + "." + method.getName() + "error", t);

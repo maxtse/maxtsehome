@@ -26,7 +26,7 @@ public class TestArrayList {
 
         ArrayList<String> arrayList1 = new ArrayList<>(4);
         arrayList1.add("test");
-        arrayList1.add("test1");
+        arrayList1.add("test");
         arrayList1.add("notest");
         arrayList1.add("notest");
         arrayList1.add("notest1");

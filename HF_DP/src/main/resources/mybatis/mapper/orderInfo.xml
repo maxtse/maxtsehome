@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.max.tse.db.mybatis.dao.OrderInfoDao">
+
+    <sql id="tableName">order_info</sql>
+    <sql id="insertSql">order_no,source, create_time,last_update</sql>
+    <sql id="querySql">id,<include refid="insertSql"/></sql>
+    
+    <!--<cache-ref namespace="dsf"/>&lt;!&ndash;多个mapper使用一个cache &ndash;&gt;
+    <cache type="df" eviction="FLU" readOnly="false" size="512"/>&lt;!&ndash;每个namespace使用自己的cache &ndash;&gt;-->
+    <resultMap id="allColumn" type="orderInfo">
+        <id column="id" property="id" />
+        <result column="order_no" property="orderNo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="source" property="source" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="last_update" property="lastUpdate" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="insert" keyProperty="orderInfo.id" useGeneratedKeys="true">
+             insert into <include refid="tableName"/>
+        (<include refid="insertSql"/>) values (
+        #{orderInfo.orderNo},#{orderInfo.source},#{orderInfo.createTime}, now()
+        )
+    </insert>
+
+    <select id="queryByOrderNo" resultMap="allColumn">
+        select <include refid="querySql"/> from <include refid="tableName"/>
+    </select>
+
+</mapper>

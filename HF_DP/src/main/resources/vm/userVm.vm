@@ -1,0 +1,9 @@
+<h1>
+#if($user)
+    username:$user.username
+    password:$user.password
+    id:$user.id
+    ageType:$user.ageType
+
+#end
+</h1>

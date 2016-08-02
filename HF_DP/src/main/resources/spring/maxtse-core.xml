@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+
+			http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			 http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+
+       default-lazy-init="false">
+    <context:annotation-config/>
+    <context:property-placeholder location="classpath*:*.properties" ignore-unresolvable="true"/>
+
+
+    <bean class="com.max.tse.common.utils.SpringWrapper"/>
+      <!-- 自动搜索非@Controller标注的类，和非拦截器 -->
+    <context:component-scan base-package="com">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <bean id="springBean" class="com.max.tse.spring.SpringBean"/>
+
+    <bean id="factoryCar" class="com.max.tse.spring.beanFactory.Car" init-method="myInit" destroy-method="myDestroy"/>
+
+    <bean id="carA" class="com.max.tse.spring.beanFactory.CarA">
+        <property name="carB" ref="carB"/>
+        <property name="desc" value="desca"/>
+    </bean>
+
+    <bean id="carB" class="com.max.tse.spring.beanFactory.CarB">
+        <property name="carA" ref="carA"/>
+        <property name="descB" value="descB"/>
+    </bean>
+
+    <!-- 只是用于模板 不用于页面展示 -->
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="resourceLoaderPath" value="classpath:/vm/"/>
+        <property name="velocityPropertiesMap">
+            <props>
+                <prop key="input.encoding">UTF-8</prop>
+                <prop key="output.encoding">UTF-8</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="velocityTemplateService" class="com.max.tse.spring.template.VelocityTemplateService">
+        <constructor-arg ref="velocityEngine"/>
+        <constructor-arg>
+            <map>
+                <entry key="firstVm" value="firstVm.vm"/>
+                <entry key="userVm" value="userVm.vm"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+</beans>

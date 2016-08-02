@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- 根节点-->
+<configuration>
+   <!-- &lt;!&ndash; 属性文件&ndash;&gt;
+    <properties resource="db.properties">
+        <property name="jdbc.username" value="root1"/>&lt;!&ndash; 这里的配置会被配置文件覆盖 代码里先解析这里，然后看是否有resource属性，如果有，再放入
+        文件里的，是map.putAll()方法，所以会覆盖具体逻辑见SqlSessionFactoryBuilder private void propertiesElement(XNode context)&ndash;&gt;
+    </properties>-->
+
+    <settings>
+        <setting name="logImpl" value="LOG4J"/>
+        <setting name="useGeneratedKeys" value="true"/>
+        <setting name="autoMappingBehavior" value="PARTIAL"/>
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+    <!-- -->
+    <typeAliases>
+        <package name="com.max.tse.db.mybatis.interceptor"/>
+        <package name="com.max.tse.db.mybatis.po"/>
+    </typeAliases>
+
+
+    <typeHandlers>
+        <typeHandler handler="com.max.tse.db.mybatis.handler.MyTypeHandler"/>
+    </typeHandlers>
+
+     <!-- plugins 可以设置属性值 -->
+    <plugins>
+        <plugin interceptor="logInterceptor"/>
+    </plugins>
+
+    <!--&lt;!&ndash; 环境配置&ndash;&gt;
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC">
+            </transactionManager>&lt;!&ndash;事务管理配置 事务， mybatis有两种：JDBC 和 MANAGED,
+            配置为JDBC则直接使用JDBC的事务，配置为MANAGED则是将事务托管给容器 JDBC/MANAGED&ndash;&gt;
+            <dataSource type="POOLED">&lt;!&ndash;数据连接配置 UNPOOLED | POOLED| JNDI 这里是连接池 &ndash;&gt;
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+                <property name="url" value="${jdbc.url}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+-->
+   <!-- <mappers>
+        <mapper resource="mybatis/mapper/userDao.xml"/>
+    </mappers>-->
+
+</configuration>

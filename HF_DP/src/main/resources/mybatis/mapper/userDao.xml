@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.max.tse.db.mybatis.dao.UserDao">
+
+    <sql id="tableName">user_test</sql>
+    <sql id="insertSql">username,password,age_type</sql>
+    <sql id="querySql">id,<include refid="insertSql"/></sql>
+    
+    <!--<cache-ref namespace="dsf"/>&lt;!&ndash;多个mapper使用一个cache &ndash;&gt;
+    <cache type="df" eviction="FLU" readOnly="false" size="512"/>&lt;!&ndash;每个namespace使用自己的cache &ndash;&gt;-->
+    <resultMap id="allColumn" type="user">
+        <id column="id" property="id" />
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="age_type" property="ageType"/>
+
+    </resultMap>
+
+    <insert id="addUser" keyProperty="user.id" useGeneratedKeys="true">
+             insert into <include refid="tableName"/>
+        (<include refid="insertSql"/>) values (
+        #{user.username},#{user.password},#{user.ageType}
+        )
+    </insert>
+    <update id="updateUser" statementType="PREPARED" flushCache="false"><!-- flushCache 是否情况缓存-->
+        update <include refid="tableName"/>
+        set password = #{password}
+        where id = #{id}
+    </update>
+
+    <select id="queryAll" resultMap="allColumn">
+        select <include refid="querySql"/> from <include refid="tableName"/>
+    </select>
+
+    <select id="queryById" resultMap="allColumn" useCache="false">
+        select <include refid="querySql"/> from <include refid="tableName"/>
+        where id = #{id}
+    </select>
+    <delete id="deleteUser">
+        delete from <include refid="tableName"/> where id = #{id}
+    </delete>
+
+</mapper>

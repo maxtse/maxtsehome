@@ -25,6 +25,9 @@
         <module name="HF_DP" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="HF_DP" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
 

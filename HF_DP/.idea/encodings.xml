@@ -4,9 +4,9 @@
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/pom.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/myself/Readme.txt" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/myself/filter" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/myself/singleton" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/max/tse/myself/Readme.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/max/tse/myself/filter" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/max/tse/myself/singleton" charset="UTF-8" />
   </component>
 </project>
 
